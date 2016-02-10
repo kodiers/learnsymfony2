@@ -1,0 +1,8 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}I have overriden!{% endblock %}
+
+{% block body %}
+<h1 class="page-header"> Hello World!</h1>
+    {% include ('MCMDemoBundle:Default/SubTemplates:stuff.html.twig') %}
+{% endblock %}
