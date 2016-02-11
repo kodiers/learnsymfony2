@@ -4,5 +4,17 @@
 
 {% block body %}
 <h1 class="page-header"> Hello World!</h1>
+    {{ person.name }} is {{ person.age }} and he supports {{ person.favFootballTeam }}
+    <ul>
+        {% for pers in people %}
+            <li>{{ pers.name }} is {{ pers.age }} and he supports {{ pers.favFootballTeam }}</li>
+        {% endfor %}
+    </ul>
+    {{ pers2.name }} is {{ pers2.age }} and he supports {{ pers2.favFootballTeam }}
+    <ul>
+        {% for pers in people2 %}
+            <li>{{ pers.name }} is {{ pers.age }} and he supports {{ pers.favFootballTeam }}</li>
+        {% endfor %}
+    </ul>
     {% include ('MCMDemoBundle:Default/SubTemplates:stuff.html.twig') %}
 {% endblock %}
