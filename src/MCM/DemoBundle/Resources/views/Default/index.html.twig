@@ -4,17 +4,25 @@
 
 {% block body %}
 <h1 class="page-header"> Hello World!</h1>
-    {{ person.name }} is {{ person.age }} and he supports {{ person.favFootballTeam }}
-    <ul>
-        {% for pers in people %}
-            <li>{{ pers.name }} is {{ pers.age }} and he supports {{ pers.favFootballTeam }}</li>
-        {% endfor %}
-    </ul>
-    {{ pers2.name }} is {{ pers2.age }} and he supports {{ pers2.favFootballTeam }}
-    <ul>
-        {% for pers in people2 %}
-            <li>{{ pers.name }} is {{ pers.age }} and he supports {{ pers.favFootballTeam }}</li>
-        {% endfor %}
-    </ul>
+    {% if person is defined %}
+        {{ person.0.name }} is {{ person.0.age }} and he supports {{ person.0.favFootballTeam }}
+    {% endif %}
+    {% if people is defined %}
+        <ul>
+            {% for pers in people %}
+                <li>{{ pers.name }} is {{ pers.age }} and he supports {{ pers.favFootballTeam }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if pers2 is defined %}
+        {{ pers2.name }} is {{ pers2.age }} and he supports {{ pers2.favFootballTeam }}
+    {% endif %}
+    {% if people2 is defined %}
+        <ul>
+            {% for pers in people2 %}
+                <li>{{ pers.name }} is {{ pers.age }} and he supports {{ pers.favFootballTeam }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
     {% include ('MCMDemoBundle:Default/SubTemplates:stuff.html.twig') %}
 {% endblock %}
