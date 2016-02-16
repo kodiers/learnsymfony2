@@ -1,3 +1,12 @@
 mcm_demo_homepage:
     path:     /
     defaults: { _controller: MCMDemoBundle:Default:index }
+
+mcm_demo_form:
+    path: /form
+    defaults: { _controller: MCMDemoBundle:Default:form }
+
+mcm_demo_thankyou:
+    path: /thankyou
+    defaults: { _controller: MCMDemoBundle:Default:thankyou }
+    methods: [POST]

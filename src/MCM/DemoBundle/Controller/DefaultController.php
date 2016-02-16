@@ -4,6 +4,8 @@ namespace MCM\DemoBundle\Controller;
 
 use MCM\DemoBundle\Entity\Person;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use MCM\DemoBundle\Form\Type\PersonType;
 
 class DefaultController extends Controller
 {
@@ -69,13 +71,50 @@ class DefaultController extends Controller
         $em->persist($person2);
         $em->flush();
 
-        exit(\Doctrine\Common\Util\Debug::dump($person));
+//        exit(\Doctrine\Common\Util\Debug::dump($person));
 
         return $this->render('MCMDemoBundle:Default:index.html.twig', array(
 //            'person' => $person,
-            'people' => $people,
+//            'people' => $people,
 //            'pers2' => $pers2,
 //            'people2' => $people2
         ));
+    }
+
+    public function formAction(Request $request)
+    {
+        $person = new Person();
+        $person->setName('billy the kid');
+        $person->setAge(23);
+
+//        $form = $this->createFormBuilder($person)
+//            ->add('name', 'text', array(
+//                'label' => 'Your name',
+//            ))
+//            ->add('age', 'integer')
+//            ->add('save', 'submit', array(
+//                'attr' => array(
+////                    'formnovalidate' => 'formnovalidate',
+//                    'class' => 'mySubmitbutton'
+//                )
+//            ))
+//            ->getForm();
+        $form = $this->createForm(new PersonType(), $person, array(
+            'action' => $this->generateUrl('mcm_demo_homepage'),
+            'method' => 'POST',
+        ));
+        $form->handleRequest($request);
+
+        if($form->isValid()) {
+//            return $this->redirect($this->generateUrl('mcm_demo_homepage'));
+            return $this->forward('MCMDemoBundle:Default:thankyou', array('personName' => $person->getName()));
+        }
+
+        return $this->render('MCMDemoBundle:Default:form.html.twig', array('ourForm' => $form->createView()));
+    }
+
+    public function thankyouAction($personName)
+    {
+        return $this->render('MCMDemoBundle:Default:thankyou.html.twig', array('personName' => $personName));
     }
 }
