@@ -2,7 +2,11 @@
 
 namespace MCM\DemoBundle\Controller;
 
+use MCM\DemoBundle\Entity\Colour;
+use MCM\DemoBundle\Entity\MyChoice;
 use MCM\DemoBundle\Entity\Person;
+use MCM\DemoBundle\Form\Type\ArrayChoiceType;
+use MCM\DemoBundle\Form\Type\EntityChoiceType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use MCM\DemoBundle\Form\Type\PersonType;
@@ -100,7 +104,7 @@ class DefaultController extends Controller
 //            ))
 //            ->getForm();
         $form = $this->createForm(new PersonType(), $person, array(
-            'action' => $this->generateUrl('mcm_demo_homepage'),
+//            'action' => $this->generateUrl('mcm_demo_homepage'),
             'method' => 'POST',
         ));
         $form->handleRequest($request);
@@ -116,5 +120,43 @@ class DefaultController extends Controller
     public function thankyouAction($personName)
     {
         return $this->render('MCMDemoBundle:Default:thankyou.html.twig', array('personName' => $personName));
+    }
+
+    public function arrayChoiceAction(Request $request)
+    {
+        $myColour = new Colour();
+        $myColour->setFavColour(3);
+        $form = $this->createForm(new ArrayChoiceType(), $myColour, array(
+//            'action' => 'mcm_demo_arraychoice',
+            'method' => 'POST'
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isValid())
+        {
+            exit(\Doctrine\Common\Util\Debug::dump($myColour));
+        }
+
+        return $this->render('MCMDemoBundle:Default:arrayChoice.html.twig', array('form' => $form->createView()));
+    }
+
+    public function entityChoiceAction(Request $request)
+    {
+        $myColour = new Colour();
+        $myChoice = new MyChoice();
+        $favColour = $this->getDoctrine()->getRepository('MCMDemoBundle:Colour')->find(4);
+        $myChoice->setFavColour($favColour);
+        $form = $this->createForm(new EntityChoiceType(), $myChoice, array(
+            'method' => 'POST'
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isValid())
+        {
+        }
+
+        return $this->render('MCMDemoBundle:Default:arrayChoice.html.twig', array('form' => $form->createView()));
     }
 }

@@ -10,3 +10,11 @@ mcm_demo_thankyou:
     path: /thankyou
     defaults: { _controller: MCMDemoBundle:Default:thankyou }
     methods: [POST]
+
+mcm_demo_arraychoice:
+    path: /form/arraychoice
+    defaults: { _controller: MCMDemoBundle:Default:arrayChoice }
+
+mcm_demo_entitychoice:
+    path: /form/entitychoice
+    defaults: { _controller: MCMDemoBundle:Default:entityChoice }
